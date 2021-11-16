@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="AXTzur" name="Demo" projectType="guiapp" useAppConfig="0"
+<JUCERPROJECT id="GoEkqb" name="Demo" projectType="guiapp" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
-  <MAINGROUP id="qKtHNF" name="Demo">
-    <GROUP id="{92A60C62-52EB-8973-D7EB-008272E7E91A}" name="Headers">
-      <FILE id="Ingbeo" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="nXQd5k" name="HeaderComponent.h" compile="0" resource="0"
+  <MAINGROUP id="nrEvTH" name="Demo">
+    <GROUP id="{766ED54D-B2B6-AEBB-710A-C3AB78AE35C4}" name="Header">
+      <FILE id="eGwwDK" name="BodyComponent.h" compile="0" resource="0" file="Source/BodyComponent.h"/>
+      <FILE id="nmiwL7" name="Gender.h" compile="0" resource="0" file="Source/Gender.h"/>
+      <FILE id="vQNqP9" name="HeaderComponent.h" compile="0" resource="0"
             file="Source/HeaderComponent.h"/>
-      <FILE id="r6DOQK" name="ViewComponent.h" compile="0" resource="0" file="Source/ViewComponent.h"/>
-      <FILE id="lOVNdM" name="FooterComponent.h" compile="0" resource="0"
-            file="Source/FooterComponent.h"/>
-      <FILE id="ljqslI" name="Gender.h" compile="0" resource="0" file="Source/Gender.h"/>
-      <FILE id="LTHCte" name="Person.h" compile="0" resource="0" file="Source/Person.h"/>
-      <FILE id="AJNsvh" name="PersonManager.h" compile="0" resource="0" file="Source/PersonManager.h"/>
+      <FILE id="QOAQah" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="BcHs21" name="Person.h" compile="0" resource="0" file="Source/Person.h"/>
+      <FILE id="JWhyf8" name="PersonManager.h" compile="0" resource="0" file="Source/PersonManager.h"/>
+      <FILE id="ut8Toc" name="ViewComponent.h" compile="0" resource="0" file="Source/ViewComponent.h"/>
     </GROUP>
-    <GROUP id="{F8054E5C-031D-BBD4-D57B-3E8E95AD6AE8}" name="Source">
-      <FILE id="h6z4gB" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
-      <FILE id="SmbKYm" name="MainComponent.cpp" compile="1" resource="0"
-            file="Source/MainComponent.cpp"/>
-      <FILE id="ylEsuL" name="HeaderComponent.cpp" compile="1" resource="0"
+    <GROUP id="{64F0D420-E60A-CC97-47EA-899D72F76862}" name="Source">
+      <FILE id="a2WQ2l" name="BodyComponent.cpp" compile="1" resource="0"
+            file="Source/BodyComponent.cpp"/>
+      <FILE id="DlG1WB" name="HeaderComponent.cpp" compile="1" resource="0"
             file="Source/HeaderComponent.cpp"/>
-      <FILE id="OrOUOe" name="ViewComponent.cpp" compile="1" resource="0"
-            file="Source/ViewComponent.cpp"/>
-      <FILE id="PgL966" name="FooterComponent.cpp" compile="1" resource="0"
-            file="Source/FooterComponent.cpp"/>
-      <FILE id="fExEis" name="Person.cpp" compile="1" resource="0" file="Source/Person.cpp"/>
-      <FILE id="blCRfn" name="PersonManager.cpp" compile="1" resource="0"
+      <FILE id="E6CTo6" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="q5etMk" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="RYUlCC" name="Person.cpp" compile="1" resource="0" file="Source/Person.cpp"/>
+      <FILE id="VnLbTt" name="PersonManager.cpp" compile="1" resource="0"
             file="Source/PersonManager.cpp"/>
+      <FILE id="YVvCxh" name="ViewComponent.cpp" compile="1" resource="0"
+            file="Source/ViewComponent.cpp"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
@@ -37,11 +36,11 @@
         <CONFIGURATION isDebug="0" name="Release" targetName="Demo"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>

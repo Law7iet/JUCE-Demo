@@ -1,24 +1,24 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent() : footer(manager) {
-    
-    view = std::make_unique<ViewComponent>(manager.getPersonFromIndex(0));
-    
-    for(auto btn : footer.buttons) {
-        btn->addListener(this);
-    }
+MainComponent::MainComponent() {
     
     addAndMakeVisible(header);
-    addAndMakeVisible(*view);
-    addAndMakeVisible(footer);
+    addAndMakeVisible(body);
     
-    setSize(1000, 700);
+    undoButton.setButtonText("Indietro");
+    addAndMakeVisible(undoButton);
+    
+    loadDataButton.setButtonText("Carica");
+    addAndMakeVisible(loadDataButton);
+    
+    saveDataButton.setButtonText("Salva");
+    addAndMakeVisible(saveDataButton);
+    
+    setSize(800, 600);
 }
 
-MainComponent::~MainComponent() {
-    for (auto btn : footer.buttons) btn->removeListener(this);
-}
+MainComponent::~MainComponent() {}
 
 //==============================================================================
 void MainComponent::paint (juce::Graphics& g) {
@@ -27,22 +27,18 @@ void MainComponent::paint (juce::Graphics& g) {
 
 void MainComponent::resized() {
     juce::Rectangle<int> area = getLocalBounds();
-    int headerFooterHeight = 40;
+    int headerHeight = 40;
+    int buttonWidth = 100;
+    int buttonMargin = 10;
 
-    header.setBounds(area.removeFromTop(headerFooterHeight));
-    footer.setBounds(area.removeFromBottom(headerFooterHeight));
-    view->setBounds(area);
+    auto headerArea = area.removeFromTop(headerHeight);
+    header.setBounds(headerArea);
+    undoButton.setBounds((headerArea.removeFromLeft(buttonWidth)).reduced(buttonMargin));
+    loadDataButton.setBounds((headerArea.removeFromRight(buttonWidth)).reduced(buttonMargin));
+    saveDataButton.setBounds((headerArea.removeFromRight(buttonWidth)).reduced(buttonMargin));
+    
+    body.setBounds(area);
 }
 
-void MainComponent::buttonClicked(juce::Button* button) {
-    for (int i = 0; i < footer.buttons.size(); i++) {
-        auto btn = footer.buttons.getUnchecked(i);
-        if (btn == button) {
-            view.reset(new ViewComponent(manager.getPersonFromIndex(i)));
-            addAndMakeVisible(*view);
-            resized();
-            return;
-        }
-    }
-}
+void MainComponent::buttonClicked(juce::Button* button) {}
 

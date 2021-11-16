@@ -11,15 +11,11 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "Gender.h"
 
 //==============================================================================
 /*
 */
-enum class Gender {
-    male,
-    female,
-    other
-};
 
 class Person {
 public:

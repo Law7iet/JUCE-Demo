@@ -12,13 +12,8 @@
 #include "ViewComponent.h"
 
 //==============================================================================
-ViewComponent::ViewComponent(Person* person) : currentPerson(person) {
-    nameLabel.setText("Name: ", juce::dontSendNotification);
-    surnameLabel.setText("Surname: ", juce::dontSendNotification);
-    genderLabel.setText("Gender: ", juce::dontSendNotification);
-    dateOfBirthLabel.setText("Date of birth (age): ", juce::dontSendNotification);
-    fiscalCodeLabel.setText("Fiscal code: ", juce::dontSendNotification);
-    
+ViewComponent::ViewComponent(Person* person) : currentPerson(person)
+{
     juce::String gender;
     switch(person->getGender()) {
         case Gender::male:
@@ -34,23 +29,36 @@ ViewComponent::ViewComponent(Person* person) : currentPerson(person) {
             gender = "";
     }
     
-    nameInput.setText(person->getName(), juce::dontSendNotification);
-    surnameInput.setText(person->getSurname(), juce::dontSendNotification);
-    genderInput.setText(gender, juce::dontSendNotification);
-    dateOfBirthInput.setText(person->getDateOfBirth().toString(true, false) + " (" + juce::String(person->getAge()) + ")", juce::dontSendNotification);
-    fiscalCodeInput.setText(person->getFiscalCode(), juce::dontSendNotification);
+    std::function<void(juce::Label*, juce::String)> setText = [] (juce::Label* label, juce::String text) {
+        label->setText(text, juce::dontSendNotification);
+    };
+    setText(&nameLabel, "Name: ");
+    setText(&surnameLabel, "Surname: ");
+    setText(&genderLabel, "Gender: ");
+    setText(&dateOfBirthLabel, "Date of birth (age): ");
+    setText(&fiscalCodeLabel, "Fiscal code: ");
     
-    nameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    surnameLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    genderLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    dateOfBirthLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    fiscalCodeLabel.setColour(juce::Label::textColourId, juce::Colours::white);
-    nameInput.setColour(juce::Label::textColourId, juce::Colours::white);
-    surnameInput.setColour(juce::Label::textColourId, juce::Colours::white);
-    genderInput.setColour(juce::Label::textColourId, juce::Colours::white);
-    dateOfBirthInput.setColour(juce::Label::textColourId, juce::Colours::white);
-    fiscalCodeInput.setColour(juce::Label::textColourId, juce::Colours::white);
-        
+    setText(&nameInput, person->getName());
+    setText(&surnameInput, person->getSurname());
+    setText(&genderInput, gender);
+    setText(&dateOfBirthInput, person->getDateOfBirth().toString(true, false) + " (" + juce::String(person->getAge()) + ")");
+    setText(&fiscalCodeInput, person->getFiscalCode());
+    
+    std::function<void(juce::Label*)> setWhiteText = [] (juce::Label *l) {
+        l->setColour(juce::Label::textColourId, juce::Colours::white);
+    };
+    
+    setWhiteText(&nameLabel);
+    setWhiteText(&surnameLabel);
+    setWhiteText(&genderLabel);
+    setWhiteText(&dateOfBirthLabel);
+    setWhiteText(&fiscalCodeLabel);
+    setWhiteText(&nameInput);
+    setWhiteText(&surnameInput);
+    setWhiteText(&genderInput);
+    setWhiteText(&dateOfBirthInput);
+    setWhiteText(&fiscalCodeInput);
+    
     addAndMakeVisible(nameLabel);
     addAndMakeVisible(surnameLabel);
     addAndMakeVisible(genderLabel);
@@ -78,40 +86,26 @@ void ViewComponent::resized()
     auto height = juce::jmax((valueArea.getHeight() - margin * 2) / rows, 20);
     auto keyArea = valueArea.removeFromLeft(valueArea.getWidth() / 2);
     
-//    auto setLabel = [this, height] (juce::Rectangle<int> workingArea, juce::Label c, int align) {
-//        c.setBounds(workingArea.removeFromTop(height));
-//        c.setJustificationType(align);
-//    };
-//
-//    setLabel(keyArea, nameLabel, juce::Justification::centred);
-//    setLabel(valueArea, nameInput, juce::Justification::left);
+    std::function<void(juce::Rectangle<int>, juce::Label*, int)> setLabel = [this, height] (juce::Rectangle<int> workingArea, juce::Label* c, int align) {
+        c->setBounds(workingArea.removeFromTop(height));
+        c->setJustificationType(align);
+    };
     
     keyArea.removeFromTop(margin);
     valueArea.removeFromTop(margin);
     
-    nameLabel.setBounds(keyArea.removeFromTop(height));
-    nameLabel.setJustificationType(juce::Justification::centred);
-    surnameLabel.setBounds(keyArea.removeFromTop(height));
-    surnameLabel.setJustificationType(juce::Justification::centred);
-    genderLabel.setBounds(keyArea.removeFromTop(height));
-    genderLabel.setJustificationType(juce::Justification::centred);
-    dateOfBirthLabel.setBounds(keyArea.removeFromTop(height));
-    dateOfBirthLabel.setJustificationType(juce::Justification::centred);
-    fiscalCodeLabel.setBounds(keyArea.removeFromTop(height));
-    fiscalCodeLabel.setJustificationType(juce::Justification::centred);
+    setLabel(keyArea, &nameLabel, juce::Justification::centred);
+    setLabel(keyArea, &surnameLabel, juce::Justification::centred);
+    setLabel(keyArea, &genderLabel, juce::Justification::centred);
+    setLabel(keyArea, &dateOfBirthLabel, juce::Justification::centred);
+    setLabel(keyArea, &fiscalCodeLabel, juce::Justification::centred);
     
-    nameInput.setBounds(valueArea.removeFromTop(height));
-    nameInput.setJustificationType(juce::Justification::left);
-    surnameInput.setBounds(valueArea.removeFromTop(height));
-    surnameInput.setJustificationType(juce::Justification::left);
-    genderInput.setBounds(valueArea.removeFromTop(height));
-    genderInput.setJustificationType(juce::Justification::left);
-    dateOfBirthInput.setBounds(valueArea.removeFromTop(height));
-    dateOfBirthInput.setJustificationType(juce::Justification::left);
-    fiscalCodeInput.setBounds(valueArea.removeFromTop(height));
-    fiscalCodeInput.setJustificationType(juce::Justification::left);
-    
+    setLabel(valueArea, &nameInput, juce::Justification::left);
+    setLabel(valueArea, &surnameInput, juce::Justification::left);
+    setLabel(valueArea, &genderInput, juce::Justification::left);
+    setLabel(valueArea, &dateOfBirthInput, juce::Justification::left);
+    setLabel(valueArea, &fiscalCodeInput, juce::Justification::left);
+
     keyArea.removeFromBottom(margin);
     valueArea.removeFromBottom(margin);
-    
 }

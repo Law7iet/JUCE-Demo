@@ -12,16 +12,13 @@
 #include "HeaderComponent.h"
 
 //==============================================================================
-HeaderComponent::HeaderComponent() {
-    title = "Database";
-}
+HeaderComponent::HeaderComponent() {}
 
 HeaderComponent::~HeaderComponent() {}
 
-void HeaderComponent::paint (juce::Graphics& g) {
+void HeaderComponent::paint(juce::Graphics& g) {
     g.fillAll(juce::Colours::darkgrey);
     g.setColour(juce::Colours::white);
-    g.drawText(title, getLocalBounds(), juce::Justification::centred, true);
 }
 
 void HeaderComponent::resized() {}

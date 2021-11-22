@@ -11,7 +11,7 @@
 #pragma once
 
 enum class Gender {
-    male,
+    male = 1,
     female,
     other
 };

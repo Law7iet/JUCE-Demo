@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "PersonManager.h"
 
 //==============================================================================
 /*
@@ -18,24 +19,18 @@
 class BodyComponent  : public juce::Component
 {
 public:
-    BodyComponent();
+    BodyComponent(PersonManager* manager);
     ~BodyComponent() override;
 
     void paint (juce::Graphics& g) override;
     void resized() override;
-    void loadData();
-    
-    // Funzioni da implementare quando si vuole usare TableListBox
 
+    juce::OwnedArray<juce::TextButton> buttons;
+    
 private:
-//    juce::TableListBox table  { {}, this };
-//    juce::Font font           { 20.0f };
-//    
-//    std::unique_ptr<juce::XmlElement> data;
-//    juce::XmlElement* columnList = nullptr;
-//    juce::XmlElement* dataList = nullptr;
-//    
-//    int numRows = 0;
+    int numOfElements;
+    int rowHeight;
+    int margin;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BodyComponent)
 };

@@ -15,7 +15,8 @@
 //==============================================================================
 /*
 */
-class HeaderComponent  : public juce::Component
+class HeaderComponent  : public juce::Component,
+                                juce::FilenameComponentListener
 {
 public:
     HeaderComponent();
@@ -23,7 +24,15 @@ public:
 
     void paint (juce::Graphics& g) override;
     void resized() override;
+    void filenameComponentChanged(juce::FilenameComponent* fileComponentThatHasChanged) override;
 
+    // Public attributes ------------------------------------------------------
+    
+    juce::TextButton addButton;
+    juce::TextButton undoButton;
+    juce::TextButton saveDataButton;
+    std::unique_ptr<juce::FilenameComponent> loadDataComponent;
+    
 private:
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HeaderComponent)

@@ -4,28 +4,32 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="nrEvTH" name="Demo">
     <GROUP id="{766ED54D-B2B6-AEBB-710A-C3AB78AE35C4}" name="Header">
-      <FILE id="eGwwDK" name="BodyComponent.h" compile="0" resource="0" file="Source/BodyComponent.h"/>
-      <FILE id="nmiwL7" name="Gender.h" compile="0" resource="0" file="Source/Gender.h"/>
+      <FILE id="QOAQah" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="vQNqP9" name="HeaderComponent.h" compile="0" resource="0"
             file="Source/HeaderComponent.h"/>
-      <FILE id="QOAQah" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="eGwwDK" name="BodyComponent.h" compile="0" resource="0" file="Source/BodyComponent.h"/>
+      <FILE id="fgu3ZG" name="AddPersonComponent.h" compile="0" resource="0"
+            file="Source/AddPersonComponent.h"/>
+      <FILE id="ut8Toc" name="ViewComponent.h" compile="0" resource="0" file="Source/ViewComponent.h"/>
+      <FILE id="nmiwL7" name="Gender.h" compile="0" resource="0" file="Source/Gender.h"/>
       <FILE id="BcHs21" name="Person.h" compile="0" resource="0" file="Source/Person.h"/>
       <FILE id="JWhyf8" name="PersonManager.h" compile="0" resource="0" file="Source/PersonManager.h"/>
-      <FILE id="ut8Toc" name="ViewComponent.h" compile="0" resource="0" file="Source/ViewComponent.h"/>
     </GROUP>
     <GROUP id="{64F0D420-E60A-CC97-47EA-899D72F76862}" name="Source">
-      <FILE id="a2WQ2l" name="BodyComponent.cpp" compile="1" resource="0"
-            file="Source/BodyComponent.cpp"/>
-      <FILE id="DlG1WB" name="HeaderComponent.cpp" compile="1" resource="0"
-            file="Source/HeaderComponent.cpp"/>
       <FILE id="E6CTo6" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="q5etMk" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
+      <FILE id="DlG1WB" name="HeaderComponent.cpp" compile="1" resource="0"
+            file="Source/HeaderComponent.cpp"/>
+      <FILE id="a2WQ2l" name="BodyComponent.cpp" compile="1" resource="0"
+            file="Source/BodyComponent.cpp"/>
+      <FILE id="jMQO5o" name="AddPersonComponent.cpp" compile="1" resource="0"
+            file="Source/AddPersonComponent.cpp"/>
+      <FILE id="YVvCxh" name="ViewComponent.cpp" compile="1" resource="0"
+            file="Source/ViewComponent.cpp"/>
       <FILE id="RYUlCC" name="Person.cpp" compile="1" resource="0" file="Source/Person.cpp"/>
       <FILE id="VnLbTt" name="PersonManager.cpp" compile="1" resource="0"
             file="Source/PersonManager.cpp"/>
-      <FILE id="YVvCxh" name="ViewComponent.cpp" compile="1" resource="0"
-            file="Source/ViewComponent.cpp"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>

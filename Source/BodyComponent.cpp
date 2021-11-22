@@ -11,25 +11,18 @@
 #include "BodyComponent.h"
 
 //==============================================================================
-BodyComponent::BodyComponent() {
-//    loadData();
-//    
-//    table.setColour (juce::ListBox::outlineColourId, juce::Colours::grey);      // [2]
-//        table.setOutlineThickness (1);
-//    
-//    if (columnList != nullptr)
-//    {
-//        for (auto* columnXml : columnList->getChildIterator())
-//        {
-//            table.getHeader().addColumn (columnXml->getStringAttribute ("name"), // [2]
-//                                         columnXml->getIntAttribute ("columnId"),
-//                                         columnXml->getIntAttribute ("width"),
-//                                         50,
-//                                         400,
-//                                         juce::TableHeaderComponent::defaultFlags);
-//        }
-//    }
-    setBounds(0, 0, 1000, 1000);
+BodyComponent::BodyComponent(PersonManager* manager) {
+    numOfElements = manager->getNumberOfPeople();
+    rowHeight = 40;
+    margin = 10;
+    setBounds(0, 0, juce::jmin(1000, 1000), (margin * 2) + (rowHeight * numOfElements));
+    
+    for(int index = 0; index < numOfElements; index++) {
+        juce::TextButton* btn = new juce::TextButton();
+        btn->setButtonText(manager->getPersonFromIndex(index)->getFiscalCode());
+        buttons.add(btn);
+        addAndMakeVisible(btn);
+    }
 }
 
 BodyComponent::~BodyComponent() {}
@@ -37,19 +30,15 @@ BodyComponent::~BodyComponent() {}
 void BodyComponent::paint(juce::Graphics& g) {
     g.fillAll(juce::Colours::lightgrey);
     g.setColour(juce::Colours::black);
+    g.drawText("BODY", getLocalBounds(), juce::Justification::centred);
 }
 
-void BodyComponent::resized() {}
-
-void BodyComponent::loadData() {
-//    juce::File path = juce::File("/Users/hanchu/Desktop/Tirocinio - AudioModeling/JUCE - Tutorials/Demo/Resources");
-//    auto file = path.getChildFile("TableData.xml");
-//    if(file.exists()) {
-//        auto data = juce::XmlDocument::parse(file);
-//
-//        auto dataList   = data->getChildByName ("DATA");
-//        auto columnList = data->getChildByName ("HEADERS");
-//
-//        int numRows = dataList->getNumChildElements();
-//    }
+void BodyComponent::resized() {
+    juce::Rectangle<int> area = getLocalBounds();
+    area.removeFromTop(margin);
+    for(juce::TextButton* btn : buttons){
+        btn->setBounds(area
+                       .removeFromTop(rowHeight)
+                       .reduced(margin, 0));
+    }
 }

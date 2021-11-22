@@ -5,6 +5,7 @@
 #include "BodyComponent.h"
 #include "ViewComponent.h"
 #include "PersonManager.h"
+#include "AddPersonComponent.h"
 
 //==============================================================================
 /*
@@ -29,12 +30,9 @@ private:
     PersonManager manager;
     
     HeaderComponent header;
-    BodyComponent body;
+    std::unique_ptr<BodyComponent> body;
     std::unique_ptr<ViewComponent> detailsView;
-    
-    juce::TextButton undoButton;
-    juce::TextButton loadDataButton;
-    juce::TextButton saveDataButton;
+    std::unique_ptr<AddPersonComponent> addView;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

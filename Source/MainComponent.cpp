@@ -3,8 +3,7 @@
 //==============================================================================
 MainComponent::MainComponent() {
     
-    body = std::make_unique<BodyComponent>(&manager);
-    addAndMakeVisible(body.get());
+    makeListView();
     
     header.addButton.addListener(this);
     header.undoButton.addListener(this);
@@ -12,7 +11,6 @@ MainComponent::MainComponent() {
     header.saveDataButton.setEnabled(false);
     
     addAndMakeVisible(header);
-    addAndMakeVisible(body.get());
     
     setSize(800, 600);
 }
@@ -21,6 +19,12 @@ MainComponent::~MainComponent() {
     header.addButton.removeListener(this);
     header.undoButton.removeListener(this);
     header.saveDataButton.removeListener(this);
+
+    if(auto body = dynamic_cast<ListComponent*>(currentView.get()))
+    {
+        body->addOrRemoveListeners(false, this);
+    }
+
 }
 
 //==============================================================================
@@ -33,14 +37,11 @@ void MainComponent::resized() {
     int headerHeight = 40;
 
     header.setBounds(area.removeFromTop(headerHeight));    
-    if(body != nullptr) {
-        body->setBounds(area);
-        header.undoButton.setEnabled(false);
-    } else {
-        header.undoButton.setEnabled(true);
-    }
-    if(addView != nullptr) {
-        addView->setBounds(area);
+    if(currentView.get() != nullptr)
+    {
+        currentView.get()->setBounds(area);
+        bool isListViewOn = dynamic_cast<ListComponent*>(currentView.get()) != nullptr;
+        header.undoButton.setEnabled(!isListViewOn);
     }
         
 }
@@ -48,42 +49,85 @@ void MainComponent::resized() {
 void MainComponent::buttonClicked(juce::Button* button) {
     if(button == &header.addButton) {
         std::cout << "Hai cliccato il tasto aggiungi" << std::endl;
-
-        body.reset();
-        header.addButton.setButtonText("Pulisci");
-        header.saveDataButton.setEnabled(true);
-        addView = std::make_unique<AddPersonComponent>();
-        addAndMakeVisible(addView.get());
-        
-        resized();
-        
+        makeAddView();
     } else if(button == &header.undoButton) {
         std::cout << "Hai cliccato il tasto indietro" << std::endl;
-        
-        addView.reset();
-        header.addButton.setButtonText("Aggiungi");
-        header.saveDataButton.setEnabled(false);
-        body = std::make_unique<BodyComponent>(&manager);
-        addAndMakeVisible(body.get());
-        resized();
-        
+        makeListView();
     } else if(button == &header.saveDataButton) {
         std::cout << "Hai cliccato il tasto salva" << std::endl;
-        
-        manager.addPerson(
-                          addView->getName(),
-                          addView->getSurname(),
-                          addView->getGender(),
-                          addView->getdateOfBirth(),
-                          addView->getfiscalCode()
-                          );
-        
-        addView.reset();
-        header.addButton.setButtonText("Aggiungi");
-        header.saveDataButton.setEnabled(false);
-        body = std::make_unique<BodyComponent>(&manager);
-        addAndMakeVisible(body.get());
-        resized();
+        if(auto tmp = dynamic_cast<AddPersonComponent*>(currentView.get()))
+        {
+            manager.addPerson(
+                              tmp->getName(),
+                              tmp->getSurname(),
+                              tmp->getGender(),
+                              tmp->getdateOfBirth(),
+                              tmp->getfiscalCode()
+                              );
+        }
+        makeListView();
+    }
+    if (currentView.get() != nullptr)
+    {
+        if (auto body = dynamic_cast<ListComponent*>(currentView.get()))
+        {
+            for (int i = 0; i < body->buttons.size(); i++)
+            {
+                auto b = body->buttons.getUnchecked(i);
+                if (b == button)
+                {
+                    makeDeatilsView(manager.getPersonFromIndex(i));
+                    return;
+                }
+            }
+        }
     }
 }
 
+void MainComponent::makeListView()
+{
+    if(currentView.get() != nullptr)
+    {
+        removeChildComponent(currentView.get());
+        auto tmp = dynamic_cast<ListComponent*>(currentView.get());
+        if(tmp != nullptr)
+        {
+            tmp->addOrRemoveListeners(false, this);
+        }
+    }
+    currentView.reset(new ListComponent(&manager));
+    header.addButton.setButtonText("Aggiungi");
+    header.saveDataButton.setEnabled(false);
+    addAndMakeVisible(currentView.get());
+    auto tmp = dynamic_cast<ListComponent*>(currentView.get());
+    if(tmp != nullptr)
+    {
+        tmp->addOrRemoveListeners(true, this);
+    }
+    resized();
+}
+
+void MainComponent::makeAddView()
+{
+    if(currentView.get() != nullptr)
+    {
+        removeChildComponent(currentView.get());
+    }
+    currentView.reset(new AddPersonComponent());
+    header.addButton.setButtonText("Pulisci");
+    header.saveDataButton.setEnabled(true);
+    addAndMakeVisible(currentView.get());
+    resized();
+}
+
+void MainComponent::makeDeatilsView(Person* person)
+{
+    if(currentView.get() != nullptr)
+    {
+        removeChildComponent(currentView.get());
+    }
+    currentView.reset(new ViewComponent(person));
+    header.saveDataButton.setEnabled(false);
+    addAndMakeVisible(currentView.get());
+    resized();
+}

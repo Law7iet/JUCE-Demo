@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    BodyComponent.h
+    ListViewComponent.h
     Created: 16 Nov 2021 3:03:18pm
     Author:  Han Chu
 
@@ -16,14 +16,15 @@
 //==============================================================================
 /*
 */
-class BodyComponent  : public juce::Component
+class ListComponent  : public juce::Component
 {
 public:
-    BodyComponent(PersonManager* manager);
-    ~BodyComponent() override;
+    ListComponent(PersonManager* manager);
+    ~ListComponent() override;
 
-    void paint (juce::Graphics& g) override;
+    void paint(juce::Graphics& g) override;
     void resized() override;
+    void addOrRemoveListeners(bool shouldAdd, juce::Button::Listener* componentListener);
 
     juce::OwnedArray<juce::TextButton> buttons;
     
@@ -32,5 +33,5 @@ private:
     int rowHeight;
     int margin;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (BodyComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ListComponent)
 };

@@ -8,10 +8,10 @@
   ==============================================================================
 */
 
-#include "BodyComponent.h"
+#include "ListComponent.h"
 
 //==============================================================================
-BodyComponent::BodyComponent(PersonManager* manager) {
+ListComponent::ListComponent(PersonManager* manager) {
     numOfElements = manager->getNumberOfPeople();
     rowHeight = 40;
     margin = 10;
@@ -25,20 +25,35 @@ BodyComponent::BodyComponent(PersonManager* manager) {
     }
 }
 
-BodyComponent::~BodyComponent() {}
+ListComponent::~ListComponent() {}
 
-void BodyComponent::paint(juce::Graphics& g) {
+void ListComponent::paint(juce::Graphics& g) {
     g.fillAll(juce::Colours::lightgrey);
     g.setColour(juce::Colours::black);
     g.drawText("BODY", getLocalBounds(), juce::Justification::centred);
 }
 
-void BodyComponent::resized() {
+void ListComponent::resized() {
     juce::Rectangle<int> area = getLocalBounds();
     area.removeFromTop(margin);
     for(juce::TextButton* btn : buttons){
         btn->setBounds(area
                        .removeFromTop(rowHeight)
                        .reduced(margin, 0));
+    }
+}
+
+void ListComponent::addOrRemoveListeners(bool shouldAdd, juce::Button::Listener* componentListener)
+{
+    for(auto b : buttons)
+    {
+        if(shouldAdd)
+        {
+            b->addListener(componentListener);
+        }
+        else
+        {
+            b->removeListener(componentListener);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 #include <JuceHeader.h>
 #include "HeaderComponent.h"
-#include "BodyComponent.h"
+#include "ListComponent.h"
 #include "ViewComponent.h"
 #include "PersonManager.h"
 #include "AddPersonComponent.h"
@@ -24,15 +24,16 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
     void buttonClicked(juce::Button* button) override;
-
+    void makeListView();
+    void makeAddView();
+    void makeDeatilsView(Person* person);
+    
 private:
     //==============================================================================
     PersonManager manager;
-    
     HeaderComponent header;
-    std::unique_ptr<BodyComponent> body;
-    std::unique_ptr<ViewComponent> detailsView;
-    std::unique_ptr<AddPersonComponent> addView;
+    
+    std::unique_ptr<Component> currentView = nullptr;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

@@ -7,7 +7,7 @@
       <FILE id="QOAQah" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="vQNqP9" name="HeaderComponent.h" compile="0" resource="0"
             file="Source/HeaderComponent.h"/>
-      <FILE id="eGwwDK" name="BodyComponent.h" compile="0" resource="0" file="Source/BodyComponent.h"/>
+      <FILE id="eGwwDK" name="ListComponent.h" compile="0" resource="0" file="Source/ListComponent.h"/>
       <FILE id="fgu3ZG" name="AddPersonComponent.h" compile="0" resource="0"
             file="Source/AddPersonComponent.h"/>
       <FILE id="ut8Toc" name="ViewComponent.h" compile="0" resource="0" file="Source/ViewComponent.h"/>
@@ -21,8 +21,8 @@
             file="Source/MainComponent.cpp"/>
       <FILE id="DlG1WB" name="HeaderComponent.cpp" compile="1" resource="0"
             file="Source/HeaderComponent.cpp"/>
-      <FILE id="a2WQ2l" name="BodyComponent.cpp" compile="1" resource="0"
-            file="Source/BodyComponent.cpp"/>
+      <FILE id="a2WQ2l" name="ListComponent.cpp" compile="1" resource="0"
+            file="Source/ListComponent.cpp"/>
       <FILE id="jMQO5o" name="AddPersonComponent.cpp" compile="1" resource="0"
             file="Source/AddPersonComponent.cpp"/>
       <FILE id="YVvCxh" name="ViewComponent.cpp" compile="1" resource="0"

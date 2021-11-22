@@ -86,25 +86,25 @@ void ViewComponent::resized()
     auto height = juce::jmax((valueArea.getHeight() - margin * 2) / rows, 20);
     auto keyArea = valueArea.removeFromLeft(valueArea.getWidth() / 2);
     
-    std::function<void(juce::Rectangle<int>, juce::Label*, int)> setLabel = [this, height] (juce::Rectangle<int> workingArea, juce::Label* c, int align) {
-        c->setBounds(workingArea.removeFromTop(height));
+    std::function<void(juce::Rectangle<int>*, juce::Label*, int)> setLabel = [this, height] (juce::Rectangle<int>* workingArea, juce::Label* c, int align) {
+        c->setBounds(workingArea->removeFromTop(height));
         c->setJustificationType(align);
     };
     
     keyArea.removeFromTop(margin);
     valueArea.removeFromTop(margin);
     
-    setLabel(keyArea, &nameLabel, juce::Justification::centred);
-    setLabel(keyArea, &surnameLabel, juce::Justification::centred);
-    setLabel(keyArea, &genderLabel, juce::Justification::centred);
-    setLabel(keyArea, &dateOfBirthLabel, juce::Justification::centred);
-    setLabel(keyArea, &fiscalCodeLabel, juce::Justification::centred);
+    setLabel(&keyArea, &nameLabel, juce::Justification::centred);
+    setLabel(&keyArea, &surnameLabel, juce::Justification::centred);
+    setLabel(&keyArea, &genderLabel, juce::Justification::centred);
+    setLabel(&keyArea, &dateOfBirthLabel, juce::Justification::centred);
+    setLabel(&keyArea, &fiscalCodeLabel, juce::Justification::centred);
     
-    setLabel(valueArea, &nameInput, juce::Justification::left);
-    setLabel(valueArea, &surnameInput, juce::Justification::left);
-    setLabel(valueArea, &genderInput, juce::Justification::left);
-    setLabel(valueArea, &dateOfBirthInput, juce::Justification::left);
-    setLabel(valueArea, &fiscalCodeInput, juce::Justification::left);
+    setLabel(&valueArea, &nameInput, juce::Justification::left);
+    setLabel(&valueArea, &surnameInput, juce::Justification::left);
+    setLabel(&valueArea, &genderInput, juce::Justification::left);
+    setLabel(&valueArea, &dateOfBirthInput, juce::Justification::left);
+    setLabel(&valueArea, &fiscalCodeInput, juce::Justification::left);
 
     keyArea.removeFromBottom(margin);
     valueArea.removeFromBottom(margin);

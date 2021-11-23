@@ -13,7 +13,8 @@
     your controls and content.
 */
 class MainComponent  : public juce::Component,
-                              juce::Button::Listener
+                              juce::Button::Listener,
+                              juce::ChangeListener
 {
 public:
     //==============================================================================
@@ -25,8 +26,9 @@ public:
     void resized() override;
     void buttonClicked(juce::Button* button) override;
     void makeListView();
-    void makeAddView();
+    void showAddPersonForm(bool shouldShow);
     void makeDeatilsView(Person* person);
+    void changeListenerCallback(juce::ChangeBroadcaster* source) override;
     
 private:
     //==============================================================================
@@ -34,6 +36,7 @@ private:
     HeaderComponent header;
     
     std::unique_ptr<Component> currentView = nullptr;
+    AddPersonComponent addPersonForm;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

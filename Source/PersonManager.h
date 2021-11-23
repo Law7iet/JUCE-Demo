@@ -17,7 +17,7 @@
 //==============================================================================
 /*
 */
-class PersonManager {
+class PersonManager: public juce::ChangeBroadcaster {
 public:
     PersonManager();
     void addPerson(juce::String name,

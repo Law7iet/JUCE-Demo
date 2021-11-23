@@ -10,6 +10,8 @@ MainComponent::MainComponent() {
     header.saveDataButton.addListener(this);
     header.saveDataButton.setEnabled(false);
     
+    manager.addChangeListener(this);
+    
     addAndMakeVisible(header);
     
     setSize(800, 600);
@@ -19,17 +21,20 @@ MainComponent::~MainComponent() {
     header.addButton.removeListener(this);
     header.undoButton.removeListener(this);
     header.saveDataButton.removeListener(this);
-
+    
+    
+    manager.removeChangeListener(this);
     if(auto body = dynamic_cast<ListComponent*>(currentView.get()))
     {
         body->addOrRemoveListeners(false, this);
     }
-
 }
 
 //==============================================================================
-void MainComponent::paint (juce::Graphics& g) {
+void MainComponent::paint (juce::Graphics& g) 
+{
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    
 }
 
 void MainComponent::resized() {
@@ -40,32 +45,31 @@ void MainComponent::resized() {
     if(currentView.get() != nullptr)
     {
         currentView.get()->setBounds(area);
-        bool isListViewOn = dynamic_cast<ListComponent*>(currentView.get()) != nullptr;
-        header.undoButton.setEnabled(!isListViewOn);
+    }  
+
+    if (isParentOf(&addPersonForm))
+    {
+        addPersonForm.setBounds(area);
     }
-        
 }
 
 void MainComponent::buttonClicked(juce::Button* button) {
     if(button == &header.addButton) {
         std::cout << "Hai cliccato il tasto aggiungi" << std::endl;
-        makeAddView();
+        showAddPersonForm(true);
     } else if(button == &header.undoButton) {
         std::cout << "Hai cliccato il tasto indietro" << std::endl;
         makeListView();
     } else if(button == &header.saveDataButton) {
         std::cout << "Hai cliccato il tasto salva" << std::endl;
-        if(auto tmp = dynamic_cast<AddPersonComponent*>(currentView.get()))
-        {
-            manager.addPerson(
-                              tmp->getName(),
-                              tmp->getSurname(),
-                              tmp->getGender(),
-                              tmp->getdateOfBirth(),
-                              tmp->getfiscalCode()
-                              );
-        }
-        makeListView();
+        manager.addPerson(
+            addPersonForm.getName(),
+            addPersonForm.getSurname(),
+            addPersonForm.getGender(),
+            addPersonForm.getdateOfBirth(),
+            addPersonForm.getfiscalCode()
+        );
+        showAddPersonForm(false);
     }
     if (currentView.get() != nullptr)
     {
@@ -98,25 +102,31 @@ void MainComponent::makeListView()
     currentView.reset(new ListComponent(&manager));
     header.addButton.setButtonText("Aggiungi");
     header.saveDataButton.setEnabled(false);
+    header.undoButton.setEnabled(false);
     addAndMakeVisible(currentView.get());
     auto tmp = dynamic_cast<ListComponent*>(currentView.get());
     if(tmp != nullptr)
     {
         tmp->addOrRemoveListeners(true, this);
     }
-    resized();
+    
+    showAddPersonForm(false);
 }
 
-void MainComponent::makeAddView()
+void MainComponent::showAddPersonForm(bool shouldShow)
 {
-    if(currentView.get() != nullptr)
+    if (shouldShow)
     {
-        removeChildComponent(currentView.get());
+        addAndMakeVisible(addPersonForm);
+        header.addButton.setButtonText("Pulisci");
+        header.saveDataButton.setEnabled(true);
+        header.undoButton.setEnabled(true);
     }
-    currentView.reset(new AddPersonComponent());
-    header.addButton.setButtonText("Pulisci");
-    header.saveDataButton.setEnabled(true);
-    addAndMakeVisible(currentView.get());
+    else
+    {
+        removeChildComponent(&addPersonForm);
+    }
+
     resized();
 }
 
@@ -128,6 +138,20 @@ void MainComponent::makeDeatilsView(Person* person)
     }
     currentView.reset(new ViewComponent(person));
     header.saveDataButton.setEnabled(false);
+    header.undoButton.setEnabled(true);
     addAndMakeVisible(currentView.get());
-    resized();
+    
+    showAddPersonForm(false);
+}
+
+void MainComponent::changeListenerCallback(juce::ChangeBroadcaster* source)
+{
+    if (source == &manager)
+    {
+        auto tmp = dynamic_cast<ListComponent*>(currentView.get());
+        if (tmp != nullptr)
+        {
+            makeListView();
+        }
+    }
 }

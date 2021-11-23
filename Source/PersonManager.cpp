@@ -38,6 +38,7 @@ void PersonManager::addPerson(juce::String name,
                               juce::String fiscalCode) {
     Person* p = new Person(name, surname, gender, dateOfBirth, fiscalCode);
     peopleList.add(p);
+    sendChangeMessage();
 }
 
 int PersonManager::getNumberOfPeople() {
@@ -52,3 +53,4 @@ Person* PersonManager::getPersonFromIndex(int index) {
         return pickedPerson;
     }
 }
+

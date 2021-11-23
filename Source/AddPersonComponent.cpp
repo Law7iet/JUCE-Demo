@@ -41,50 +41,35 @@ AddPersonComponent::AddPersonComponent() {
 
 AddPersonComponent::~AddPersonComponent() {}
 
-void AddPersonComponent::paint (juce::Graphics& g) {}
+void AddPersonComponent::paint (juce::Graphics& g) 
+{
+    g.fillAll(juce::Colours::black.withAlpha(0.5f));
 
-void AddPersonComponent::resized() {
-    int labelLength = 200;
+    auto area = getLocalBounds().reduced(0.1 * getWidth(), 0.1 * getHeight());
+    g.setColour(juce::Colours::black);
+    g.fillRect(area.toFloat());
+}
+
+void AddPersonComponent::resized() 
+{
+    auto rightArea = getLocalBounds().reduced(0.2 * getWidth(), 0.2 * getHeight());
+    auto leftArea = rightArea.removeFromLeft(0.5f * rightArea.getWidth());
     int labelHeight = 40;
-    float topMargin = juce::jmax(10, (getHeight() - (labelHeight * 5)) / 2);
-    float sideMargin = (getWidth() - (labelLength * 2)) / 2;
-    juce::Rectangle<int> area;
-    
-    std::function<void(juce::Component* c, bool isLabel, juce::Rectangle<int>* area)> setComponent =
-    [this, labelHeight, labelLength, sideMargin]
-    (juce::Component* c, bool isLabel, juce::Rectangle<int>* area)
-    {
-        if(isLabel) {
-            c->setBounds(area
-                         ->removeFromTop(labelHeight)
-                         .withTrimmedLeft(sideMargin)
-                         .removeFromLeft(labelLength)
-                         );
-        } else {
-            c->setBounds(area
-                         ->removeFromTop(labelHeight)
-                         .withTrimmedLeft(sideMargin + labelLength)
-                         .removeFromLeft(labelLength)
-                         );
-        }
-    };
-    
-    area = getLocalBounds();
-    area.removeFromTop(topMargin);
-    setComponent(&nameLabel, true, &area);
-    setComponent(&surnameLabel, true, &area);
-    setComponent(&genderLabel, true, &area);
-    setComponent(&dateOfBirthLabel, true, &area);
-    setComponent(&fiscalCodeLabel, true, &area);
 
-    area = getLocalBounds();
-    area.removeFromTop(topMargin);
-    setComponent(&nameInput, false, &area);
-    setComponent(&surnameInput, false, &area);
-    setComponent(&genderInput, false, &area);
-    setComponent(&dateOfBirthInput, false, &area);
-    setComponent(&fiscalCodeInput, false, &area);
+    nameLabel.setBounds(leftArea.removeFromTop(labelHeight));
+    nameInput.setBounds(rightArea.removeFromTop(labelHeight));
 
+    surnameLabel.setBounds(leftArea.removeFromTop(labelHeight));
+    surnameInput.setBounds(rightArea.removeFromTop(labelHeight));
+
+    genderLabel.setBounds(leftArea.removeFromTop(labelHeight));
+    genderInput.setBounds(rightArea.removeFromTop(labelHeight));
+
+    dateOfBirthLabel.setBounds(leftArea.removeFromTop(labelHeight));
+    dateOfBirthInput.setBounds(rightArea.removeFromTop(labelHeight));
+
+    fiscalCodeLabel.setBounds(leftArea.removeFromTop(labelHeight));
+    fiscalCodeInput.setBounds(rightArea.removeFromTop(labelHeight));
 }
 
 juce::String AddPersonComponent::getName() {
@@ -122,7 +107,10 @@ juce::Time AddPersonComponent::getdateOfBirth() {
     year = input.substring(6, 10).getIntValue();
     
     switch(month) {
+        // Puoi raggruppare i case uguali 
         case 1:
+        case 3:
+        case 5:
             if(day > 31) {
                 return juce::Time().getCurrentTime();
             }
@@ -132,18 +120,8 @@ juce::Time AddPersonComponent::getdateOfBirth() {
                 return juce::Time().getCurrentTime();
             }
             break;
-        case 3:
-            if(day > 31) {
-                return juce::Time().getCurrentTime();
-            }
-            break;
         case 4:
             if(day > 30) {
-                return juce::Time().getCurrentTime();
-            }
-            break;
-        case 5:
-            if(day > 31) {
                 return juce::Time().getCurrentTime();
             }
             break;

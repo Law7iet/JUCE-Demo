@@ -155,3 +155,19 @@ void MainComponent::changeListenerCallback(juce::ChangeBroadcaster* source)
         }
     }
 }
+
+void MainComponent::addListener(MyListener* l)
+{
+    listeners.add(l);
+}
+
+void MainComponent::removeListener(MyListener* l)
+{
+    listeners.remove(l);
+}
+
+
+void MainComponent::currentViewChanged(juce::String viewName)
+{
+    std::cout << viewName << std::endl;
+}

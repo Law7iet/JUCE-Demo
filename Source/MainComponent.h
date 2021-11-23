@@ -6,6 +6,7 @@
 #include "ViewComponent.h"
 #include "PersonManager.h"
 #include "AddPersonComponent.h"
+#include "MyListener.h"
 
 //==============================================================================
 /*
@@ -14,7 +15,9 @@
 */
 class MainComponent  : public juce::Component,
                               juce::Button::Listener,
-                              juce::ChangeListener
+                              juce::ChangeListener,
+                              MyListener
+
 {
 public:
     //==============================================================================
@@ -30,6 +33,10 @@ public:
     void makeDeatilsView(Person* person);
     void changeListenerCallback(juce::ChangeBroadcaster* source) override;
     
+    void addListener(MyListener* l);
+    void removeListener(MyListener* l);
+    void currentViewChanged(juce::String viewName);
+    
 private:
     //==============================================================================
     PersonManager manager;
@@ -37,6 +44,8 @@ private:
     
     std::unique_ptr<Component> currentView = nullptr;
     AddPersonComponent addPersonForm;
+    
+    juce::ListenerList<MyListener> listeners;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
